@@ -47,6 +47,8 @@ public class BATabBarItem: UIButton {
     //Color of the outline and text when a tab is selected
     var strokeColor: UIColor?
     
+    var selectedImageColor: UIColor = .white
+    
     //Tab title
     var title: UILabel?
     
@@ -77,7 +79,7 @@ public class BATabBarItem: UIButton {
         customInit(unselectedImage: image, selectedImage: selectedImage)
     }
     
-    convenience public init(image: UIImage, selectedImage: UIImage, title: NSAttributedString) {
+    convenience public init(image: UIImage, selectedImage: UIImage, title: NSAttributedString, selectedColor: UIColor) {
         self.init()
         
         self.title = UILabel()
@@ -87,7 +89,7 @@ public class BATabBarItem: UIButton {
             titleLabel.textAlignment = .center
             titleLabel.numberOfLines = 0
         }
-        
+        selectedImageColor = selectedColor
         customInit(unselectedImage: image, selectedImage: selectedImage)
     }
     
@@ -138,10 +140,15 @@ public class BATabBarItem: UIButton {
 
         //create inner tab bar item
         innerTabBarItem = UIButton()
-        selectedImageView = UIImageView(image: selectedImage)
-        unselectedImageView = UIImageView(image: unselectedImage)
+        let templateUnselectedImage = unselectedImage?.withRenderingMode(.alwaysTemplate)
+        let templateSelectedImage = selectedImage?.withRenderingMode(.alwaysTemplate)
 
-        
+        selectedImageView = UIImageView(image: templateSelectedImage)
+        unselectedImageView = UIImageView(image: templateUnselectedImage)
+
+        selectedImageView?.tintColor =  selectedImageColor
+        unselectedImageView?.tintColor = titleLabel?.textColor
+
         if let innerTabBarItem = innerTabBarItem, let selectedImageView = selectedImageView, let unselectedImageView = unselectedImageView {
             innerTabBarItem.isUserInteractionEnabled = false //allows for clicks to pass through to the button below
             innerTabBarItem.translatesAutoresizingMaskIntoConstraints = false
