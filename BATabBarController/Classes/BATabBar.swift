@@ -207,6 +207,7 @@ class BATabBar: UIView {
             //this is to avoid users pressing down on multiple tab items at once
             tabBarItem.addTarget(self, action: #selector(disableAllButtonsBut(_:)), for: .touchDown)
 
+            tabBarItem.addTarget(self, action: #selector(enableAllButtons), for: .touchUpInside)
         }
     }
     
@@ -219,7 +220,7 @@ class BATabBar: UIView {
         }
     }
     
-    func enableAllButtons(){
+    @objc func enableAllButtons(){
         for i in 0..<tabBarItems.count {
             tabBarItems[i].isUserInteractionEnabled = true
         }
