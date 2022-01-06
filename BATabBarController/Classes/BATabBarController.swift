@@ -157,6 +157,14 @@ public class BATabBarController:  UIViewController {
             tabBar.selectedTabItem(index, animated: animated)
         }
     }
+    
+    public func hideTabbar(){
+        tabBar?.isHidden = true
+    }
+
+    public func showTabbar(){
+        tabBar?.isHidden = false
+    }
 }
 
 extension BATabBarController: BATabBarDelegate {
